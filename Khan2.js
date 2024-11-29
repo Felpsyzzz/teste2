@@ -52,6 +52,53 @@ document.head.appendChild(Object.assign(document.createElement("style"),{innerHT
 document.head.appendChild(Object.assign(document.createElement('style'),{innerHTML:"::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: #f1f1f1; } ::-webkit-scrollbar-thumb { background: #ff0000; border-radius: 10px; } ::-webkit-scrollbar-thumb:hover { background: #cc0000; }"}));
 document.querySelector("link[rel~='icon']").href = 'https://r2.e-z.host/4d0a0bea-60f8-44d6-9e74-3032a64a9f32/ukh0rq22.png';
 
+
+function setupMusicPlayer() {
+    const musicList = [
+        { name: "Música 1", url: "https://raw.githubusercontent.com/Felpsyzzz/teste2/main/Khan2.js" }, // Substitua pelos links reais das músicas
+        { name: "Música 2", url: "https://raw.githubusercontent.com/Felpsyzzz/teste2/main/Khan2.js" },
+        { name: "Música 3", url: "https://raw.githubusercontent.com/Felpsyzzz/teste2/main/Khan2.js" }
+    ];
+
+    // Criar o seletor de músicas
+    const musicSelector = document.createElement('select');
+    musicSelector.id = "musicSelector";
+    musicSelector.style.cssText = "width: 100%; margin: 10px 0; background-color: #540b8a; color: white; border-radius: 5px;";
+
+    // Adicionar as opções de música
+    musicList.forEach(music => {
+        const option = document.createElement('option');
+        option.value = music.url;
+        option.textContent = music.name;
+        musicSelector.appendChild(option);
+    });
+
+    // Adicionar evento para tocar a música selecionada
+    musicSelector.addEventListener('change', function() {
+        const selectedMusic = musicSelector.value;
+        if (selectedMusic) {
+            playAudio(selectedMusic);
+            sendToast(`🎵 Tocando: ${musicList.find(m => m.url === selectedMusic).name}`, 5000);
+        }
+    });
+
+    // Adicionar o seletor de músicas ao painel dropdownMenu
+    const musicLabel = document.createElement('label');
+    musicLabel.textContent = "Selecione uma música:";
+    musicLabel.style.cssText = "color: white; font-family: Arial, sans-serif; margin-top: 10px; display: block;";
+    dropdownMenu.appendChild(musicLabel);
+    dropdownMenu.appendChild(musicSelector);
+}
+
+/* Função para tocar a música */
+function playAudio(url) {
+    const audio = new Audio(url);
+    audio.play();
+}
+
+/* Chamada para configurar o painel */
+setupMusicPlayer();
+
 /* Emmiter */
 class EventEmitter{constructor(){this.events={}}on(t,e){"string"==typeof t&&(t=[t]),t.forEach(t=>{this.events[t]||(this.events[t]=[]),this.events[t].push(e)})}off(t,e){"string"==typeof t&&(t=[t]),t.forEach(t=>{this.events[t]&&(this.events[t]=this.events[t].filter(t=>t!==e))})}emit(t,...e){this.events[t]&&this.events[t].forEach(t=>{t(...e)})}once(t,e){"string"==typeof t&&(t=[t]);let s=(...i)=>{e(...i),this.off(t,s)};this.on(t,s)}};
 const plppdo = new EventEmitter();
@@ -460,7 +507,7 @@ setupMusicPlayer();
 loadCss('https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css', 'toastifyCss');
 loadScript('https://cdn.jsdelivr.net/npm/toastify-js', 'toastifyPlugin')
 .then(async () => {
-    sendToast("🌿 Khanware injetado com sucesso!");
+    sendToast("🌿 Zk injetado com sucesso!");
     playAudio('https://r2.e-z.host/4d0a0bea-60f8-44d6-9e74-3032a64a9f32/gcelzszy.wav');
     await delay(500);
     sendToast(`⭐ Bem vindo(a) de volta: ${user.nickname}`);
